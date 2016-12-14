@@ -1,5 +1,5 @@
 {
-  "name": "freee-class",
+  "name": "freeze-class",
   "version": "1.0.1",
   "description": "class freezer",
   "main": "index.js",
@@ -32,6 +32,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/msteckyefantis/subzero"
+    "url": "https://github.com/msteckyefantis/freeze-class"
   }
 }
