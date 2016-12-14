@@ -1,4 +1,4 @@
-#classFreezer
+#freezeClass
 
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
