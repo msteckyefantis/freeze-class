@@ -27,9 +27,9 @@ function deepFreezeObject( object ) {
         but will not recursively freeze a class within a class/object
     */
 
-    for( let name of Object.getOwnPropertyNames( object ) ) {
+    for( let propertyName of Object.getOwnPropertyNames( object ) ) {
 
-        const property = object[name];
+        const property = object[ propertyName ];
 
         if( (typeof property === OBJECT) && (property !== null) ) {
 
