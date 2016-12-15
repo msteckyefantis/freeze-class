@@ -14,219 +14,243 @@ const freezeClass = require( FULL_MODULE_PATH );
 
 describe( MODULE_PATH, function() {
 
-    it( "can't add static methods", function() {
+    describe( 'class', function() {
 
-        const ControlClass = class { f() { return 69 } };
+        it( "is frozen (let it go)", function() {
 
-        freezeClass( ControlClass );
+            const ControlClass = class { f() { return 69 } };
 
-        let erroredAsExpected = false;
+            freezeClass( ControlClass );
 
-        try {
+            expect( Object.isFrozen( ControlClass ) ).to.be.true;
+        });
 
-            ControlClass.f = function() { return 22 };
-        }
-        catch( err ) {
+        it( "can't add static methods", function() {
 
-            if( err instanceof TypeError ) {
+            const ControlClass = class { f() { return 69 } };
 
-                expect( err.message ).to.include( 'object is not extensible' );
+            freezeClass( ControlClass );
 
-                erroredAsExpected = true;
+            let erroredAsExpected = false;
+
+            try {
+
+                ControlClass.g = function() { return 22 };
             }
-        }
-        finally {
+            catch( err ) {
 
-            expect( erroredAsExpected ).to.be.true;
-        }
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.include( 'object is not extensible' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
+
+        it( "can't edit static methods", function() {
+
+            const ControlClass = class { static f() { return 69 } };
+
+            freezeClass( ControlClass );
+
+            let erroredAsExpected = false;
+
+            try {
+
+                ControlClass.f = function() { return 22 };
+            }
+            catch( err ) {
+
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.include( 'Cannot assign to read only property' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
+
+        it( "can't delete static methods", function() {
+
+            const ControlClass = class { static f() { return 69 } };
+
+            freezeClass( ControlClass );
+
+            let erroredAsExpected = false;
+
+            try {
+
+                delete ControlClass.f;
+            }
+            catch( err ) {
+
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.include( 'Cannot delete property' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
+
+        it( "can't add static property (number)", function() {
+
+            const ControlClass = class { f() { return 69 } };
+
+            freezeClass( ControlClass );
+
+            let erroredAsExpected = false;
+
+            try {
+
+                ControlClass.constant = 42;
+            }
+            catch( err ) {
+
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.include( 'object is not extensible' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
     });
 
-    it( "can't edit static methods", function() {
+    describe( 'class prototype', function() {
 
-        const ControlClass = class { static f() { return 69 } };
+        it( "is frozen (let it goooo)", function() {
 
-        freezeClass( ControlClass );
+            const ControlClass = class { f() { return 69 } };
 
-        let erroredAsExpected = false;
+            freezeClass( ControlClass );
 
-        try {
+            expect( Object.isFrozen( ControlClass.prototype ) ).to.be.true;
+        });
 
-            ControlClass.f = function() { return 22 };
-        }
-        catch( err ) {
+        it( "can't add methods", function() {
 
-            if( err instanceof TypeError ) {
+            const ControlClass = class { f() { return 69 } };
 
-                expect( err.message ).to.include( 'Cannot assign to read only property' );
+            freezeClass( ControlClass );
 
-                erroredAsExpected = true;
+            let erroredAsExpected = false;
+
+            try {
+
+                ControlClass.prototype.g = function() { return 22 };
             }
-        }
-        finally {
+            catch( err ) {
 
-            expect( erroredAsExpected ).to.be.true;
-        }
-    });
+                if( err instanceof TypeError ) {
 
-    it( "can't delete static methods", function() {
+                    expect( err.message ).to.include( 'object is not extensible' );
 
-        const ControlClass = class { static f() { return 69 } };
-
-        freezeClass( ControlClass );
-
-        let erroredAsExpected = false;
-
-        try {
-
-            delete ControlClass.f;
-        }
-        catch( err ) {
-
-            if( err instanceof TypeError ) {
-
-                expect( err.message ).to.include( 'Cannot delete property' );
-
-                erroredAsExpected = true;
+                    erroredAsExpected = true;
+                }
             }
-        }
-        finally {
+            finally {
 
-            expect( erroredAsExpected ).to.be.true;
-        }
-    });
-
-    it( "can't add static property (constant)", function() {
-
-        const ControlClass = class { f() { return 69 } };
-
-        freezeClass( ControlClass );
-
-        let erroredAsExpected = false;
-
-        try {
-
-            ControlClass.constant = 42;
-        }
-        catch( err ) {
-
-            if( err instanceof TypeError ) {
-
-                expect( err.message ).to.include( 'object is not extensible' );
-
-                erroredAsExpected = true;
+                expect( erroredAsExpected ).to.be.true;
             }
-        }
-        finally {
+        });
 
-            expect( erroredAsExpected ).to.be.true;
-        }
-    });
+        it( "can't edit methods", function() {
 
-    it( "can't add prototype methods", function() {
+            const ControlClass = class { f() { return 69 } };
 
-        const ControlClass = class { f() { return 69 } };
+            freezeClass( ControlClass );
 
-        freezeClass( ControlClass );
+            let erroredAsExpected = false;
 
-        let erroredAsExpected = false;
+            try {
 
-        try {
-
-            ControlClass.prototype.g = function() { return 22 };
-        }
-        catch( err ) {
-
-            if( err instanceof TypeError ) {
-
-                expect( err.message ).to.include( 'object is not extensible' );
-
-                erroredAsExpected = true;
+                ControlClass.prototype.f = function() { return 22 };
             }
-        }
-        finally {
+            catch( err ) {
 
-            expect( erroredAsExpected ).to.be.true;
-        }
-    });
+                if( err instanceof TypeError ) {
 
-    it( "can't edit prototype methods", function() {
+                    expect( err.message ).to.include( 'Cannot assign to read only property' );
 
-        const ControlClass = class { f() { return 69 } };
-
-        freezeClass( ControlClass );
-
-        let erroredAsExpected = false;
-
-        try {
-
-            ControlClass.prototype.f = function() { return 22 };
-        }
-        catch( err ) {
-
-            if( err instanceof TypeError ) {
-
-                expect( err.message ).to.include( 'Cannot assign to read only property' );
-
-                erroredAsExpected = true;
+                    erroredAsExpected = true;
+                }
             }
-        }
-        finally {
+            finally {
 
-            expect( erroredAsExpected ).to.be.true;
-        }
-    });
-
-    it( "can't delete prototype methods", function() {
-
-        const ControlClass = class { f() { return 69 } };
-
-        freezeClass( ControlClass );
-
-        let erroredAsExpected = false;
-
-        try {
-
-            delete ControlClass.prototype.f;
-        }
-        catch( err ) {
-
-            if( err instanceof TypeError ) {
-
-                expect( err.message ).to.include( 'Cannot delete property' );
-
-                erroredAsExpected = true;
+                expect( erroredAsExpected ).to.be.true;
             }
-        }
-        finally {
+        });
 
-            expect( erroredAsExpected ).to.be.true;
-        }
-    });
+        it( "can't delete methods", function() {
 
-    it( "can't add static property to prototype (constant)", function() {
+            const ControlClass = class { f() { return 69 } };
 
-        const ControlClass = class { f() { return 69 } };
+            freezeClass( ControlClass );
 
-        freezeClass( ControlClass );
+            let erroredAsExpected = false;
 
-        let erroredAsExpected = false;
+            try {
 
-        try {
-
-            ControlClass.prototype.constant = 42;
-        }
-        catch( err ) {
-
-            if( err instanceof TypeError ) {
-
-                expect( err.message ).to.include( 'object is not extensible' );
-
-                erroredAsExpected = true;
+                delete ControlClass.prototype.f;
             }
-        }
-        finally {
+            catch( err ) {
 
-            expect( erroredAsExpected ).to.be.true;
-        }
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.include( 'Cannot delete property' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
+
+        it( "can't add static property (number)", function() {
+
+            const ControlClass = class { f() { return 69 } };
+
+            freezeClass( ControlClass );
+
+            let erroredAsExpected = false;
+
+            try {
+
+                ControlClass.prototype.constant = 42;
+            }
+            catch( err ) {
+
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.include( 'object is not extensible' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
     });
 });
