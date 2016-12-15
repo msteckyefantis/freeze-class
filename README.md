@@ -1,9 +1,9 @@
-#freeze-class [![npm version](https://badge.fury.io/js/freeze-class.svg)](https://badge.fury.io/js/freeze-class) [![Build Status](https://travis-ci.org/msteckyefantis/freeze-class.svg?branch=master)](https://travis-ci.org/msteckyefantis/freeze-class) 
+#freeze-class [![npm version](https://badge.fury.io/js/freeze-class.svg)](https://badge.fury.io/js/freeze-class) [![Build Status](https://travis-ci.org/msteckyefantis/freeze-class.svg?branch=master)](https://travis-ci.org/msteckyefantis/freeze-class)
 
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
 ##About:
-Freeze a class and its properties. This includes its prototype, and its static methods.
+Freeze a class and its properties. This includes freezing the class' prototype, freezing the class' static methods, freezing the class itself, and freezing any other property of the class.
 
 
 ##install:
