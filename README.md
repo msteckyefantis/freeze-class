@@ -29,13 +29,13 @@ class C {
 freezeClass( C );
 
 /*
-	all of the following will now throw TypeErrors in strict mode:
+	all of the following statements will now throw TypeErrors in strict mode:
 */
 
 // C.f = function() { return 42 }
-// C.protoype.f = function() { return 42 }
+// C.prototype.f = function() { return 42 }
 // delete C.f
-// delete C.protoype.f
+// delete C.prototype.f
 // C.g = function() { return 42 }
 // C.prototype.g = function() { return 42 }
 // C.constant = 42
