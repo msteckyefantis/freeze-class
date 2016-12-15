@@ -147,7 +147,7 @@ describe( MODULE_PATH, function() {
 
         it( "can't add methods", function() {
 
-            const ControlClass = class { f() { return 69 } };
+            const ControlClass = class { static f() { return 69 } };
 
             freezeClass( ControlClass );
 
@@ -155,7 +155,7 @@ describe( MODULE_PATH, function() {
 
             try {
 
-                ControlClass.prototype.g = function() { return 22 };
+                ControlClass.prototype.f = function() { return 22 };
             }
             catch( err ) {
 
