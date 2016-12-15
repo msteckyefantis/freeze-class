@@ -16,14 +16,16 @@
     "mocha": "^3.2.0"
   },
   "keywords": [
+    "immutability",
+    "immutable",
     "freeze",
     "class",
     "prototype",
     "ice",
-    "frozen",
-    "let",
+    "go",
     "it",
-    "go"
+    "let",
+    "frozen"
   ],
   "repository": {
     "type": "git",
