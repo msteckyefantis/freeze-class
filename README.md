@@ -3,7 +3,7 @@
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
 ##About:
-Freeze a class and its prototype. (Note: deep freeze option will be added soon)
+Freeze a class and its prototype.
 
 
 ##install:
@@ -29,7 +29,14 @@ class C {
 freezeClass( C );
 
 /*
-	all of the following statements will now throw TypeErrors in strict mode:
+	the following statements will now return true:
+*/
+
+// Object.isFrozen( C );
+// Object.isFrozen( C.prototype );
+
+/*
+	and the following statements will now throw TypeErrors in strict mode:
 */
 
 // C.g = function() { return 42 };
@@ -40,4 +47,56 @@ freezeClass( C );
 // C.prototype.f = function() { return 42 };
 // delete C.prototype.f;
 // C.prototype.constant = 42;
+```
+
+
+##optional usage:
+[![letitgo.gif](https://s27.postimg.org/gym5t7iib/letitgo.gif)](https://postimg.org/image/ptn03q7an/)
+
+Deep freeze a class.
+
+```.js
+'use strict';
+
+const freezeClass = require( 'freeze-class' );
+
+class C {}
+
+C.a = {
+
+    b: {
+
+        c: {
+
+            d: {}
+        }
+    }
+};
+
+C.prototype.x = {
+
+    y: {
+
+        z: {}
+    },
+
+    w: {}
+};
+
+freezeClass( C, 'deep' );
+
+/*
+	the following statements will now return true:
+*/
+
+// Object.isFrozen( C );
+// Object.isFrozen( C.a );
+// Object.isFrozen( C.a.b );
+// Object.isFrozen( C.a.b.c );
+// Object.isFrozen( C.a.b.c.d );
+// Object.isFrozen( C.prototype );
+// Object.isFrozen( C.prototype.x );
+// Object.isFrozen( C.prototype.x.y );
+// Object.isFrozen( C.prototype.x.y.z );
+// Object.isFrozen( C.prototype.x.w );
 ```

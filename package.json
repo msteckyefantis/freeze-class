@@ -1,6 +1,6 @@
 {
   "name": "freeze-class",
-  "version": "2.0.7",
+  "version": "3.0.0",
   "description": "class freezer",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "immutability",
     "immutable",
     "freeze",
+    "deep",
     "class",
     "prototype",
     "ice",

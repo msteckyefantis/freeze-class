@@ -5,7 +5,7 @@ const expect = require( 'chai' ).expect;
 
 const ROOT_PATH = '../';
 
-const MODULE_PATH = 'index.js';
+const MODULE_PATH = 'index';
 
 const FULL_MODULE_PATH = ROOT_PATH + MODULE_PATH;
 
@@ -251,6 +251,65 @@ describe( MODULE_PATH, function() {
 
                 expect( erroredAsExpected ).to.be.true;
             }
+        });
+    });
+
+    describe( 'deepFreeze', function() {
+
+        it( 'normal operation', function() {
+
+            const ControlClass = class {};
+
+            ControlClass.a = {
+
+                b: {
+
+                    c: {
+
+                        d: {
+
+                            e: {
+
+                                f: {
+
+
+                                    g: {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            ControlClass.prototype.a = {
+
+                b: {},
+                c: {},
+                d: {},
+                e: {},
+                f: {},
+                g: {}
+            };
+
+            freezeClass( ControlClass, 'deep' );
+
+            expect( Object.isFrozen( ControlClass ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.a ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.a.b ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.a.b.c ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.a.b.c.d ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.a.b.c.d.e ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.a.b.c.d.e.f ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.a.b.c.d.e.f.g ) ).to.be.true;
+
+            expect( Object.isFrozen( ControlClass.prototype ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a.b ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a.b ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a.d ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a.e ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a.f ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a.g ) ).to.be.true;
         });
     });
 });
