@@ -345,7 +345,7 @@ describe( MODULE_PATH, function() {
         });
     });
 
-    describe( 'deepFreeze mode', function() {
+    describe( 'deep freeze mode', function() {
 
         it( 'normal operation', function() {
 
