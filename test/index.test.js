@@ -11,16 +11,80 @@ const FULL_MODULE_PATH = ROOT_PATH + MODULE_PATH;
 
 const freezeClass = require( FULL_MODULE_PATH );
 
+const DEEP = 'deep';
+
 
 describe( MODULE_PATH, function() {
 
+    describe( 'init', function() {
+
+        it( 'class not a class', function() {
+
+            const ControlBadClass = {};
+
+            let erroredAsExpected = false;
+
+            try {
+
+                freezeClass( ControlBadClass );
+            }
+            catch( err ) {
+
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.equal( 'freeze-class error: invalid class input' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
+
+        it( 'mode not a string', function() {
+
+            const ControClass = class {};
+
+            const controlBadMode = {};
+
+            let erroredAsExpected = false;
+
+            try {
+
+                freezeClass( ControClass, controlBadMode );
+            }
+            catch( err ) {
+
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.equal( 'freeze-class error: invalid mode input' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
+    });
+
     describe( 'class', function() {
+
+        it( "returns class", function() {
+
+            const ControlClass = class { f() { return 69 } };
+
+            expect( freezeClass( ControlClass ) ).to.equal( ControlClass );
+        });
 
         it( "is frozen (let it go)", function() {
 
             const ControlClass = class { f() { return 69 } };
 
-            freezeClass( ControlClass );
+            expect( freezeClass( ControlClass ) ).to.equal( ControlClass );
 
             expect( Object.isFrozen( ControlClass ) ).to.be.true;
         });
@@ -254,7 +318,7 @@ describe( MODULE_PATH, function() {
         });
     });
 
-    describe( 'deepFreeze', function() {
+    describe( 'deepFreeze mode', function() {
 
         it( 'normal operation', function() {
 
@@ -272,7 +336,6 @@ describe( MODULE_PATH, function() {
 
                                 f: {
 
-
                                     g: {}
                                 }
                             }
@@ -288,10 +351,13 @@ describe( MODULE_PATH, function() {
                 d: {},
                 e: {},
                 f: {},
-                g: {}
+                g: {
+                    h: {},
+                    i: {}
+                }
             };
 
-            freezeClass( ControlClass, 'deep' );
+            expect( freezeClass( ControlClass, DEEP ) ).to.equal( ControlClass );
 
             expect( Object.isFrozen( ControlClass ) ).to.be.true;
             expect( Object.isFrozen( ControlClass.a ) ).to.be.true;
@@ -310,6 +376,8 @@ describe( MODULE_PATH, function() {
             expect( Object.isFrozen( ControlClass.prototype.a.e ) ).to.be.true;
             expect( Object.isFrozen( ControlClass.prototype.a.f ) ).to.be.true;
             expect( Object.isFrozen( ControlClass.prototype.a.g ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a.g.h ) ).to.be.true;
+            expect( Object.isFrozen( ControlClass.prototype.a.g.i ) ).to.be.true;
         });
     });
 });
