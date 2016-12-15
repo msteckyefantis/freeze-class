@@ -351,6 +351,13 @@ describe( MODULE_PATH, function() {
 
             const ControlClass = class {};
 
+            const ControlInnerClass = class {};
+
+            ControlInnerClass.x = {
+
+                y: {}
+            };
+
             ControlClass.a = {
 
                 b: {
@@ -363,7 +370,10 @@ describe( MODULE_PATH, function() {
 
                                 f: {
 
-                                    g: {}
+                                    g: {
+
+                                        ControlInnerClass
+                                    }
                                 }
                             }
                         }
@@ -405,6 +415,9 @@ describe( MODULE_PATH, function() {
             expect( Object.isFrozen( ControlClass.prototype.a.g ) ).to.be.true;
             expect( Object.isFrozen( ControlClass.prototype.a.g.h ) ).to.be.true;
             expect( Object.isFrozen( ControlClass.prototype.a.g.i ) ).to.be.true;
+
+            expect( Object.isFrozen( ControlInnerClass.x ) ).to.be.false;
+            expect( Object.isFrozen( ControlInnerClass.x.y ) ).to.be.false;
         });
     });
 
