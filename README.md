@@ -62,13 +62,23 @@ const freezeClass = require( 'freeze-class' );
 
 class C {}
 
+class InnerClass {}
+
+InnerClass.x = {
+
+    y: {}
+};
+
 C.a = {
 
     b: {
 
         c: {
 
-            d: {}
+            d: {
+
+                InnerClass
+            }
         }
     }
 };
@@ -99,6 +109,10 @@ freezeClass( C, 'deep' );
 // Object.isFrozen( C.prototype.x.y );
 // Object.isFrozen( C.prototype.x.y.z );
 // Object.isFrozen( C.prototype.x.w );
+// !Object.isFrozen( InnerClass );
+// !Object.isFrozen( InnerClass.x );
+// !Object.isFrozen( InnerClass.x.y );
+
 ```
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 
@@ -111,13 +125,23 @@ const freezeClass = require( 'freeze-class' );
 
 const o = {};
 
+class InnerClass {}
+
+InnerClass.x = {
+
+    y: {}
+};
+
 o.a = {
 
     b: {
 
         c: {
 
-            d: {}
+            d: {
+
+                InnerClass
+            }
         }
     }
 };
@@ -147,4 +171,7 @@ freezeClass( o, 'deep' );
 // Object.isFrozen( o.x.y );
 // Object.isFrozen( o.x.y.z );
 // Object.isFrozen( o.x.w );
+// !Object.isFrozen( InnerClass );
+// !Object.isFrozen( InnerClass.x );
+// !Object.isFrozen( InnerClass.x.y );
 ```
