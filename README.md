@@ -1,4 +1,4 @@
-#freezeClass
+#freezeClass [![npm version](https://badge.fury.io/js/freeze-class.svg)](https://badge.fury.io/js/freeze-class) [![Build Status](https://travis-ci.org/msteckyefantis/freeze-class.svg?branch=master)](https://travis-ci.org/msteckyefantis/freeze-class) 
 
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
