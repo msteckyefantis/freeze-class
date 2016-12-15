@@ -100,7 +100,7 @@ freezeClass( C, 'deep' );
 // Object.isFrozen( C.prototype.x.y.z );
 // Object.isFrozen( C.prototype.x.w );
 ```
-❄️🎅🏿🎅🏽🎅⛄️🎿🗻🏂
+❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 
 Deep freeze an object in **'deep'** mode. This will **not** freeze any classes within the object.
 
