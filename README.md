@@ -53,7 +53,7 @@ freezeClass( C );
 ##optional usage:
 [![letitgo.gif](https://s27.postimg.org/gym5t7iib/letitgo.gif)](https://postimg.org/image/ptn03q7an/)
 
-Deep freeze a class in **'deep'** mode. This will **not** freeze any classes within the class.
+Deep freeze a class in **'deep'** mode. This will **not** freeze any classes within the class. It works by recursively freezing anything of type `"object"`.
 
 ```.js
 'use strict';
@@ -116,7 +116,7 @@ freezeClass( C, 'deep' );
 ```
 ❄️🎅🏿🎅🏽🎅🏾🎅🏼⛄️🎿🗻🏂
 
-Deep freeze an object in **'deep'** mode. This will **not** freeze any classes within the object.
+Deep freeze an object in **'deep'** mode. This will **not** freeze any classes within the object. It works by recursively freezing anything of type `"object"`.
 
 ```.js
 'use strict';
