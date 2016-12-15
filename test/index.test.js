@@ -24,7 +24,7 @@ describe( MODULE_PATH, function() {
 
         try {
 
-            ControlClass.f = ()=> 22;
+            ControlClass.f = function() { return 22 };
         }
         catch( err ) {
 
