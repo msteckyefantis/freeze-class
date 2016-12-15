@@ -95,6 +95,33 @@ describe( MODULE_PATH, function() {
         }
     });
 
+    it( "can't add static property (constant)", function() {
+
+        const ControlClass = class { f() { return 69 } };
+
+        freezeClass( ControlClass );
+
+        let erroredAsExpected = false;
+
+        try {
+
+            ControlClass.constant = 42;
+        }
+        catch( err ) {
+
+            if( err instanceof TypeError ) {
+
+                expect( err.message ).to.include( 'object is not extensible' );
+
+                erroredAsExpected = true;
+            }
+        }
+        finally {
+
+            expect( erroredAsExpected ).to.be.true;
+        }
+    });
+
     it( "can't add prototype methods", function() {
 
         const ControlClass = class { f() { return 69 } };
@@ -166,33 +193,6 @@ describe( MODULE_PATH, function() {
             if( err instanceof TypeError ) {
 
                 expect( err.message ).to.include( 'Cannot delete property' );
-
-                erroredAsExpected = true;
-            }
-        }
-        finally {
-
-            expect( erroredAsExpected ).to.be.true;
-        }
-    });
-
-    it( "can't add static property (constant)", function() {
-
-        const ControlClass = class { f() { return 69 } };
-
-        freezeClass( ControlClass );
-
-        let erroredAsExpected = false;
-
-        try {
-
-            ControlClass.constant = 42;
-        }
-        catch( err ) {
-
-            if( err instanceof TypeError ) {
-
-                expect( err.message ).to.include( 'object is not extensible' );
 
                 erroredAsExpected = true;
             }

@@ -3,12 +3,7 @@
 
 module.exports = function freezeClass( classToFreeze ) {
 
-    const propertiesToFreeze = Object.getOwnPropertyNames( classToFreeze );
-
-    for( let property of propertiesToFreeze ) {
-
-        Object.freeze( classToFreeze[ property ] );
-    }
+    Object.freeze( classToFreeze.prototype );
 
     return Object.freeze( classToFreeze );
 }
