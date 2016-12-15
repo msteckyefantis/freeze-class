@@ -53,7 +53,7 @@ freezeClass( C );
 ##optional usage:
 [![letitgo.gif](https://s27.postimg.org/gym5t7iib/letitgo.gif)](https://postimg.org/image/ptn03q7an/)
 
-Deep freeze a class.
+Deep freeze a class in **'deep'** mode. This will **not** freeze any classes within the class.
 
 ```.js
 'use strict';
@@ -99,4 +99,52 @@ freezeClass( C, 'deep' );
 // Object.isFrozen( C.prototype.x.y );
 // Object.isFrozen( C.prototype.x.y.z );
 // Object.isFrozen( C.prototype.x.w );
+```
+❄️🎅🏿🎅🏽🎅⛄️🎿🗻🏂
+
+Deep freeze an object in **'deep'** mode. This will **not** freeze any classes within the object.
+
+```.js
+'use strict';
+
+const freezeClass = require( 'freeze-class' );
+
+const o = {};
+
+o.a = {
+
+    b: {
+
+        c: {
+
+            d: {}
+        }
+    }
+};
+
+o.x = {
+
+    y: {
+
+        z: {}
+    },
+
+    w: {}
+};
+
+freezeClass( o, 'deep' );
+
+/*
+	the following statements will now return true:
+*/
+
+// Object.isFrozen( o );
+// Object.isFrozen( o.a );
+// Object.isFrozen( o.a.b );
+// Object.isFrozen( o.a.b.c );
+// Object.isFrozen( o.a.b.c.d );
+// Object.isFrozen( o.x );
+// Object.isFrozen( o.x.y );
+// Object.isFrozen( o.x.y.z );
+// Object.isFrozen( o.x.w );
 ```

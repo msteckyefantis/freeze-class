@@ -2,29 +2,36 @@
 
 const DEEP = 'deep';
 
+const OBJECT = 'object';
 
-module.exports = function freezeClass( ClassToFreeze, mode ) {
+const FUNCTION = 'function';
 
-    validateInput( ClassToFreeze, mode );
+
+module.exports = function freezeClass( classOrObject, mode ) {
+
+    validateInput( classOrObject, mode );
 
     if( mode === DEEP ) {
 
-        return deepFreezeObject( ClassToFreeze );
+        return deepFreezeObject( classOrObject );
     }
 
-    Object.freeze( ClassToFreeze.prototype );
+    Object.freeze( classOrObject.prototype );
 
-    return Object.freeze( ClassToFreeze );
+    return Object.freeze( classOrObject );
 }
 
 
 function deepFreezeObject( object ) {
+    /* NOTE: does accept a class too,
+        but will not recursively freeze a class within a class/object
+    */
 
     for( let name of Object.getOwnPropertyNames( object ) ) {
 
         const property = object[name];
 
-        if( (typeof property === 'object') && (property !== null) ) {
+        if( (typeof property === OBJECT) && (property !== null) ) {
 
             deepFreezeObject( property );
         }
@@ -34,15 +41,24 @@ function deepFreezeObject( object ) {
 }
 
 
-function validateInput( ClassToFreeze, mode ) {
+function validateInput( classOrObject, mode ) {
 
-    if( typeof ClassToFreeze !== 'function' ) {
-
-        throw new TypeError( 'freeze-class error: invalid class input' );
-    }
-
-    if( mode && typeof mode !== 'string' ) {
+    if( mode && (mode !== DEEP) ) {
 
         throw new TypeError( 'freeze-class error: invalid mode input' );
     }
+
+    const classOrObjectType = typeof classOrObject;
+
+    if( classOrObjectType === FUNCTION ) {
+
+        return;
+    }
+
+    if( (mode === DEEP) && (classOrObjectType === OBJECT) ) {
+
+        return;
+    }
+
+    throw new TypeError( 'freeze-class error: invalid class or object input' );
 }

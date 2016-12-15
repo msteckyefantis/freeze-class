@@ -20,7 +20,7 @@ describe( MODULE_PATH, function() {
 
         it( 'class not a class', function() {
 
-            const ControlBadClass = {};
+            const ControlBadClass = 69;
 
             let erroredAsExpected = false;
 
@@ -32,7 +32,7 @@ describe( MODULE_PATH, function() {
 
                 if( err instanceof TypeError ) {
 
-                    expect( err.message ).to.equal( 'freeze-class error: invalid class input' );
+                    expect( err.message ).to.equal( 'freeze-class error: invalid class or object input' );
 
                     erroredAsExpected = true;
                 }
@@ -48,6 +48,33 @@ describe( MODULE_PATH, function() {
             const ControClass = class {};
 
             const controlBadMode = {};
+
+            let erroredAsExpected = false;
+
+            try {
+
+                freezeClass( ControClass, controlBadMode );
+            }
+            catch( err ) {
+
+                if( err instanceof TypeError ) {
+
+                    expect( err.message ).to.equal( 'freeze-class error: invalid mode input' );
+
+                    erroredAsExpected = true;
+                }
+            }
+            finally {
+
+                expect( erroredAsExpected ).to.be.true;
+            }
+        });
+
+        it( 'mode is not "deep"', function() {
+
+            const ControClass = class {};
+
+            const controlBadMode = "shallow";
 
             let erroredAsExpected = false;
 
@@ -378,6 +405,73 @@ describe( MODULE_PATH, function() {
             expect( Object.isFrozen( ControlClass.prototype.a.g ) ).to.be.true;
             expect( Object.isFrozen( ControlClass.prototype.a.g.h ) ).to.be.true;
             expect( Object.isFrozen( ControlClass.prototype.a.g.i ) ).to.be.true;
+        });
+    });
+
+    describe( 'freezing an object in deep mode', function() {
+
+        it( "normal operation", function() {
+
+            const controlObject = {};
+
+            const ControlClass = class {};
+
+            ControlClass.x = {
+
+                y: {}
+            };
+
+            controlObject.a = {
+
+                b: {
+
+                    c: {
+
+                        d: {
+
+                            e: {
+
+                                f: {
+
+                                    g: {
+
+                                        ControlClass
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            controlObject.x = {
+
+                y: {
+
+                    z: {}
+                },
+
+                w: {}
+            };
+
+            expect( freezeClass( controlObject, DEEP ) ).to.equal( controlObject );
+
+            expect( Object.isFrozen( controlObject ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.a ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.a.b ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.a.b.c ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.a.b.c.d ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.a.b.c.d.e ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.a.b.c.d.e.f ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.a.b.c.d.e.f.g ) ).to.be.true;
+
+            expect( Object.isFrozen( controlObject.x ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.x.y ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.x.y.z ) ).to.be.true;
+            expect( Object.isFrozen( controlObject.x.w ) ).to.be.true;
+
+            expect( Object.isFrozen( ControlClass.x ) ).to.be.false;
+            expect( Object.isFrozen( ControlClass.x.y ) ).to.be.false;
         });
     });
 });
