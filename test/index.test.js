@@ -35,7 +35,7 @@ describe( MODULE_PATH, function() {
 
             try {
 
-                ControlClass.g = function() { return 22 };
+                ControlClass.f = function() { return 22 };
             }
             catch( err ) {
 
