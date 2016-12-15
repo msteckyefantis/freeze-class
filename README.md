@@ -32,12 +32,12 @@ freezeClass( C );
 	all of the following statements will now throw TypeErrors in strict mode:
 */
 
-// C.f = function() { return 42 };
-// C.prototype.f = function() { return 42 };
-// delete C.f;
-// delete C.prototype.f;
 // C.g = function() { return 42 };
-// C.prototype.g = function() { return 42 };
+// C.f = function() { return 42 };
+// delete C.f;
 // C.constant = 42;
+// C.prototype.g = function() { return 42 };
+// C.prototype.f = function() { return 42 };
+// delete C.prototype.f;
 // C.prototype.constant = 42;
 ```
