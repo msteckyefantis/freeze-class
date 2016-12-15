@@ -416,6 +416,7 @@ describe( MODULE_PATH, function() {
             expect( Object.isFrozen( ControlClass.prototype.a.g.h ) ).to.be.true;
             expect( Object.isFrozen( ControlClass.prototype.a.g.i ) ).to.be.true;
 
+            expect( Object.isFrozen( ControlInnerClass ) ).to.be.false;
             expect( Object.isFrozen( ControlInnerClass.x ) ).to.be.false;
             expect( Object.isFrozen( ControlInnerClass.x.y ) ).to.be.false;
         });
@@ -483,6 +484,7 @@ describe( MODULE_PATH, function() {
             expect( Object.isFrozen( controlObject.x.y.z ) ).to.be.true;
             expect( Object.isFrozen( controlObject.x.w ) ).to.be.true;
 
+            expect( Object.isFrozen( ControlClass ) ).to.be.false;
             expect( Object.isFrozen( ControlClass.x ) ).to.be.false;
             expect( Object.isFrozen( ControlClass.x.y ) ).to.be.false;
         });
