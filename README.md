@@ -3,7 +3,7 @@
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
 ##About:
-Freeze a class and its prototype.
+Freeze a class and its prototype. (Note: object deep freeze mode coming soon)
 
 
 ##install:
