@@ -3,7 +3,10 @@
 [![freezer.jpg](https://s29.postimg.org/gjwm9hhmv/freezer.jpg)](https://postimg.org/image/6zczmlsar/)
 
 ##About:
-Freeze a class and its prototype. Note: this function-based module will soon be deprecated in favour of an object-based module.
+Freeze a class and its prototype.
+
+
+###Note: this module is deprecated, please use the object-based module [subzero](https://www.npmjs.com/package/subzero)
 
 
 ##install:
