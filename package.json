@@ -1,6 +1,6 @@
 {
   "name": "freeze-class",
-  "version": "4.0.10",
+  "version": "4.0.11",
   "description": "class freezer",
   "main": "index.js",
   "scripts": {
